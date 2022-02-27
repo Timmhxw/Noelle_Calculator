@@ -15,7 +15,7 @@ def hello_word():
     msg = '欢迎来到女仆诺艾尔的尾刀期望计算器v'+str(version)+'版本-by-bilibili夜雪千沫\n计算以90级诺艾尔为准'
     gui.msgbox(msg,title)
 
-    with open('readme.txt', 'r')as file:
+    with open('readme.txt', 'r',encoding = 'utf-8')as file:
         msg = file.read()
 
     msg = msg+"\n我已经阅读上述事项"
