@@ -8,19 +8,19 @@ class Noelle():
     def __init__(self):
         '''
         初始化数据
-        basic_data={
-            ATK：攻击力
-            DEF：防御力
-            Noelle_num：命座数
-            A_Magn：普攻等级
-            Q_Magn：大招等级
-            Crit_rate：暴击率
-            Crit_dmg：暴击伤害
-            Weapon：武器
-            Weapon_num：武器精炼度
-            Relic：圣遗物套装
-            basic_ATK：攻击力白板
-            basic_DEF：防御力白板
+        basic_data_list={
+            "ATK":"攻击力"
+            "DEF":"防御力"
+            "Noelle_num":"命座数"
+            "A_Magn":"普攻等级"
+            "Q_Magn":"大招等级"
+            "Crit_rate":"暴击率"
+            "Crit_dmg":"暴击伤害"
+            "Weapon":"武器"
+            "Weapon_num":"武器精炼度"
+            "Relic":"圣遗物套装"
+            "basic_ATK":"攻击力白板"
+            "basic_DEF":"防御力白板"
         }
         '''
         data =  ui.input_list()
