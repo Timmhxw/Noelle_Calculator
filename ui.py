@@ -50,7 +50,7 @@ def without_reply(reply,back_able=False):
     return True
 
 def hello_word():
-    msg = '欢迎来到女仆诺艾尔的尾刀期望计算器v'+str(version)+'版本-by-bilibili夜雪千沫\n计算以90级诺艾尔为准'
+    msg = '欢迎来到女仆诺艾尔的尾刀期望计算器v'+str(version)+'版本-by-bilibili夜雪千沫\n计算以90级诺艾尔对虚弱的93级急冻树伤害为准'
     without_reply(gui.msgbox(msg,title))
 
     with open('readme.txt', 'r',encoding = 'utf-8')as file:

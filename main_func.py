@@ -44,45 +44,25 @@ class Noelle():
         self.calc_ATK = {buff.on:0,buff.off:0}
         self.expect = {buff.on:0,buff.off:0}
         b = self.buff
-        #buff.on
-        calc_DEF = data["DEF"]+b.on.get("DEF",0)*data["basic_DEF"]
-        calc_ATK = data["ATK"]+b.on.get("ATK",0)*data["basic_ATK"]+calc_DEF*self.DEF2ATK
-        self.calc_ATK[buff.on] = calc_ATK
-        for k,v in self.A_Magn.items():
-            multi_first = v * calc_ATK + b.on.get("Dmg_Num_Inc_A",0)*calc_ATK + b.on.get("Dmg_Num_Inc_D",0)*calc_DEF#基础伤害乘区
-            multi_second = data["Crit_dmg"]+1#双爆乘区
-            multi_third = b.on.get("Dmg_Inc",0)+b.on.get("Rock_Dmg_Inc",0)+1#增伤乘区
-            multi_fourth = 0.49608355091383812010443864229765*1.05#防御抗性乘区，岩抗10%，双岩减岩抗20%
-            hit = multi_first * multi_second * multi_third * multi_fourth
-            if b.on.get("Other_Dmg"):
-                hit_add = b.on.get("Other_Dmg") * calc_ATK * multi_second * (b.on.get("Dmg_Inc",0)+1)* 0.49608355091383812010443864229765*0.7#物抗30%
-                hit = hit + hit_add
-            self.hit[buff.on][k] = hit
-        expect = multi_first * (data["Crit_rate"]*data["Crit_dmg"]+1)*multi_third*multi_fourth
-        if b.on.get("Other_Dmg"):
-            expect_add = b.on.get("Other_Dmg") * calc_ATK * (data["Crit_rate"]*data["Crit_dmg"]+1) * (b.on.get("Dmg_Inc",0)+1)* 0.49608355091383812010443864229765*0.7#物抗30%
-            expect = expect + expect_add
-        self.expect[buff.on] = expect
-            
-        #buff.off
-        calc_DEF = data["DEF"]+b.off.get("DEF",0)*data["basic_DEF"]
-        calc_ATK = data["ATK"]+b.off.get("ATK",0)*data["basic_ATK"]+calc_DEF*self.DEF2ATK
-        self.calc_ATK[buff.off] = calc_ATK
-        for k,v in self.A_Magn.items():
-            multi_first = v * calc_ATK + b.off.get("Dmg_Num_Inc_A",0)*calc_ATK + b.off.get("Dmg_Num_Inc_D",0)*calc_DEF#基础伤害乘区
-            multi_second = data["Crit_dmg"]+1#双爆乘区
-            multi_third = b.off.get("Dmg_Inc",0)+b.off.get("Rock_Dmg_Inc",0)+1#增伤乘区
-            multi_fourth = 0.49608355091383812010443864229765*1.05#防御抗性乘区，岩抗10%，双岩减岩抗20%
-            hit = multi_first * multi_second * multi_third * multi_fourth
-            if b.off.get("Other_Dmg"):
-                hit_add = b.off.get("Other_Dmg") * calc_ATK * multi_second * (b.off.get("Dmg_Inc",0)+1)* 0.49608355091383812010443864229765*0.7#物抗30%
-                hit = hit + hit_add
-            self.hit[buff.off][k] = hit
-        expect = multi_first * (data["Crit_rate"]*data["Crit_dmg"]+1)*multi_third*multi_fourth
-        if b.off.get("Other_Dmg"):
-            expect_add = b.off.get("Other_Dmg") * calc_ATK * (data["Crit_rate"]*data["Crit_dmg"]+1) * (b.off.get("Dmg_Inc",0)+1)* 0.49608355091383812010443864229765*0.7#物抗30%
-            expect = expect + expect_add
-        self.expect[buff.off] = expect
+        for st in buff.status_list:
+            calc_DEF = data["DEF"]+b.get(st,"DEF")*data["basic_DEF"]
+            calc_ATK = data["ATK"]+b.get(st,"ATK")*data["basic_ATK"]+calc_DEF*self.DEF2ATK
+            self.calc_ATK[st] = calc_ATK
+            for k,v in self.A_Magn.items():
+                multi_first = v * calc_ATK + b.get(st,"Dmg_Num_Inc_A")*calc_ATK + b.get(st,"Dmg_Num_Inc_D")*calc_DEF#基础伤害乘区
+                multi_second = data["Crit_dmg"]+1#双爆乘区
+                multi_third = b.get(st,"Dmg_Inc")+b.get(st,"Rock_Dmg_Inc")+1#增伤乘区
+                multi_fourth = 190.0/(200.0+90+93)*1.05#防御抗性乘区，岩抗10%，双岩减岩抗20%
+                hit = multi_first * multi_second * multi_third * multi_fourth
+                if b.get(st,"Other_Dmg"):
+                    hit_add = b.get(st,"Other_Dmg") * calc_ATK * multi_second * (b.get(st,"Dmg_Inc")+1)* 190.0/(200.0+90+93)*0.7#物抗30%
+                    hit = hit + hit_add
+                self.hit[st][k] = hit
+            expect = multi_first * (data["Crit_rate"]*data["Crit_dmg"]+1)*multi_third*multi_fourth
+            if b.get(st,"Other_Dmg"):
+                expect_add = b.get(st,"Other_Dmg") * calc_ATK * (data["Crit_rate"]*data["Crit_dmg"]+1) * (b.get(st,"Dmg_Inc")+1)* 190.0/(200.0+90+93)*0.7#物抗30%
+                expect = expect + expect_add
+            self.expect[st] = expect
 
     def __str__(self):
         if self.output:
@@ -94,8 +74,8 @@ class Noelle():
         s = s+'女仆无被动时的开大攻击力为：{:.2f}'.format(self.calc_ATK[buff.off])+'\n'
         for i in range(1,5):
             s = s+'女仆开大第{:d}刀暴击的伤害为：{:.2f}'.format(i,self.hit[buff.off][i])+'\n'
-        s = s+'该女仆开大第四刀的最大输出期望值为：{:.2f}'.format(self.expect[buff.on])+'\n'
-        s = s+'该女仆开大第四刀的最小输出期望值为：{:.2f}'.format(self.expect[buff.off])
+        s = s+'该女仆开大尾刀的最大输出期望值为：{:.2f}'.format(self.expect[buff.on])+'\n'
+        s = s+'该女仆开大尾刀的最小输出期望值为：{:.2f}'.format(self.expect[buff.off])
         self.output = s
         return s
 

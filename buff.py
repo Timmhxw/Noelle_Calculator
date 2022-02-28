@@ -3,14 +3,32 @@ buff_list = ["ATK","DEF","Dmg_Inc","Rock_Dmg_Inc",
              "Dmg_Num_Inc_A","Dmg_Num_Inc_D","Other_Dmg"]
 on = 1
 off = 0
+status_list = [on,off]
 accu_rate = 0.001
 class Buff():
     
     def __init__(self):
         self.on = {}
         self.off = {}
-
-    def set_buff(self,status:int,buff_type:str,num:float):
+        
+    def get(self,status:int,buff_type:str):
+        '''
+        status on满层，off0层
+        buff_type 增益类型 取buff_list内容
+        num 增益数值，如80% 输入0.8
+        '''
+        if buff_type not in buff_list:
+            print("get_buff error")
+            return 0
+        if status == on:
+            return self.on.get(buff_type,0)
+        elif status == off:
+            return self.off.get(buff_type,0)
+        else:
+            print("get_buff error")
+            return 0
+    
+    def set(self,status:int,buff_type:str,num:float):
         '''
         status on满层，off0层
         buff_type 增益类型 取buff_list内容
@@ -26,6 +44,8 @@ class Buff():
         else:
             print("set_buff error")
             return
+
+    #set_buff = set
 
     def __add__(self,other):
         target = Buff()
@@ -51,8 +71,8 @@ class Buff():
 if __name__=='__main__':
     b = Buff()
     b2 = Buff()
-    b.set_buff(on,"ATK",0.466)
-    b.set_buff(off,"Dmg_Num_Inc_A",0.8)
-    b2.set_buff(on,"ATK",0.6)
+    b.set(on,"ATK",0.466)
+    b.set(off,"Dmg_Num_Inc_A",0.8)
+    b2.set(on,"ATK",0.6)
     print(b+b2)
 
