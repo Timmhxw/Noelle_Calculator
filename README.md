@@ -6,3 +6,5 @@
 ### 计算器介绍
 ##### Noelle_Calculator:带UI的基于诺艾尔面板及武器、圣遗物数据的伤害计算器
 ##### 本家：https://github.com/Genshin-Impact-Cult-of-Noelle/noelle-Calculator
+
+##### 注意：本程序中防御抗性乘区的数值采用理论公式计算，由于各个乘区存在数值误差，得到的结果会略低于夜雪大大的程序中依据实际伤害文本逆推得到的结果

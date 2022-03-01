@@ -1,6 +1,7 @@
-#增益列表：攻击力、防御力、伤害加成、岩元素伤害加成、伤害数值加成（基于攻击力）、伤害数值加成（基于防御力）、额外伤害倍率（刀波等）
+#增益列表：攻击力、防御力、伤害加成、岩元素伤害加成、
+#   伤害数值加成（基于攻击力）、伤害数值加成（基于防御力）、额外伤害倍率（刀波等）、物理抗性降低、岩元素抗性降低
 buff_list = ["ATK","DEF","Dmg_Inc","Rock_Dmg_Inc",
-             "Dmg_Num_Inc_A","Dmg_Num_Inc_D","Other_Dmg"]
+             "Dmg_Num_Inc_A","Dmg_Num_Inc_D","Other_Dmg","Phy_RES_Dec","Rock_RES_Dec"]
 on = 1
 off = 0
 status_list = [on,off]

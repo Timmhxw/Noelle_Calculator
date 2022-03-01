@@ -1,6 +1,9 @@
 import easygui as gui
 from sys import exit
 from ast import literal_eval
+from weapon_data import weapons_list
+from Relic_data import Relics_list
+from other_buff import other_buff_list
 version = 3.0
 title = "诺艾尔期望计算器"+str(version)
 data = {}
@@ -31,9 +34,9 @@ data_range = [[0,5000],
               [1,13],
               [0.05,1],
               [0.5,5],
-              {'赤角':1,'螭骨':2, '天空':3, '白影':4, '无工':5, '狼末':6, '黑岩':7,'西风':8},
+              weapons_list,
               [1,5],
-              {'角斗士':1,'逆飞':2, '华馆':3}]
+              Relics_list]
     
 def without_reply(reply,back_able=False):
     '''
@@ -98,10 +101,10 @@ def choose_text_data():
             "Q_Magn":"大招等级"
             "Crit_rate":"暴击率"
             "Crit_dmg":"暴击伤害"
-            "Weapon":"武器" 此处输入武器对应编号：{'赤角':1,'螭骨':2, '天空':3, '白影':4, '无工':5, '狼末':6, '黑岩':7,'西风':8}
+            "Weapon":"武器" 此处输入武器对应编号：%s
             "Weapon_num":"武器精炼度"
-            "Relic":"圣遗物套装" 此处输入圣遗物对应编号：{'角斗士':1,'逆飞':2, '华馆':3}
-            '''
+            "Relic":"圣遗物套装" 此处输入圣遗物对应编号：%s
+            '''%(weapons_list,Relics_list)
         msg = msg + "\n是否已输入完成？"
         without_reply(gui.msgbox(msg,title))
         try:
@@ -170,6 +173,25 @@ def input_list():
         f.write(str(data))
     return data
 
+def choose_buff():
+    msg = "是否自定义buff？当前默认双岩、岩伤杯"
+    if gui.ccbox(msg,title,["是","否"]):
+        return True
+    else:
+        return False
+
+def get_buff():
+    msg = "请选择buff："
+    reply = gui.multchoicebox(msg,title,other_buff_list.keys())
+    if reply:
+        buff = ()
+        for key in reply:
+            buff += (other_buff_list[key],)
+    else:
+        buff = (0,1)
+    return buff
+            
+
 def show_msg(s:str):
     '''
     提示消息
@@ -212,5 +234,6 @@ def goodbye_word():
 
 if __name__=='__main__':
     print(input_list())
+    print(get_buff())
 ##    print(inspect_choose())
     output_choose('hello')
