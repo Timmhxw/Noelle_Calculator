@@ -1,5 +1,5 @@
 import buff
-Relics_list = {1:'角斗士',2: '逆飞', 3: '华馆'}
+Relics_list = {'角斗士':1,'逆飞':2, '华馆':3}
 def get_buff(Relic:int):
     b = buff.Buff()
     if Relic == 1:
@@ -15,5 +15,5 @@ def get_buff(Relic:int):
 
 if __name__=='__main__':
     for k,v in Relics_list.items():
-        print("the buff of",v,"is:\n",get_buff(k))
+        print("the buff of",k,"is:\n",get_buff(v))
 

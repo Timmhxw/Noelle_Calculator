@@ -131,8 +131,8 @@ def work(name,typed,ranged):
         if reply:
             reply = ranged[reply]
     elif typed == "float":
-        msg = "请输入女仆的"+name[1]+"(例："+str(ranged[0]*2+0.8)+")"
         while True:
+            msg = "请输入女仆的"+name[1]+"(例："+str(ranged[0]*2+0.8)+")"
             reply = gui.enterbox(msg,title)
             if reply!=None:
                 try:
@@ -143,6 +143,8 @@ def work(name,typed,ranged):
                     pass
                 msg = name[1]+"输入错误！"
                 gui.msgbox(msg,title)
+            else:
+                break
     if without_reply(reply,True):
         data.update({name[0]:reply})
         return True

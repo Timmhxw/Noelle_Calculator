@@ -1,6 +1,6 @@
 import buff
 
-weapons_list = {1:'赤角',2: '螭骨', 3: '天空', 4: '白影', 5: '无工', 6: '狼末',7: '黑岩',8: '西风'}
+weapons_list = {'赤角':1,'螭骨':2, '天空':3, '白影':4, '无工':5, '狼末':6, '黑岩':7,'西风':8}
 basic_ATK = {1:542,2:510,3:674,4:510,5:608,6:608,7:510,8:510}
 
 #攻击
@@ -49,5 +49,5 @@ def get_buff(Weapon,Weapon_num:int):
 
 if __name__ == '__main__':
     for k,v in weapons_list.items():
-        print('buff of',v,'is:\n',get_buff(k,1))
+        print('buff of',k,'is:\n',get_buff(v,1))
     
