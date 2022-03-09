@@ -1,4 +1,4 @@
-import ui
+import ui_tk as ui
 import weapon_data as wp
 import Relic_data as re
 import buff
