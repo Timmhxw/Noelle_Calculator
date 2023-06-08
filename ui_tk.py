@@ -6,7 +6,7 @@ from weapon_data import weapons_list
 from Relic_data import Relics_list
 from other_buff import other_buff_list
 from sys import exit
-version = 3.0
+version = 3.1
 title = "诺艾尔期望计算器"+str(version)
 data = {}
 error_place = []
@@ -50,8 +50,8 @@ def center_window(root, width, height):
     root.update()
 
 
-def get_image(filename,width,height):
-    im = Image.open(filename).resize((width,height))
+def get_image(im,width,height):
+    im = im.resize((width,height))
     im = im.convert('RGBA')
     r, g, b, alpha = im.split()
     alpha = alpha.point(lambda i: i>0 and 128)
@@ -68,9 +68,12 @@ def closeWindow():
         return
 
 #ui_init_start
+im = Image.open('background_cc.png')
+width,height = im.size
+if height>800:
+    width = int(width/height*800)
+    height = 800
 
-width=600
-height=800
 root = Tk()
 
 #设置标题、图标，居中显示
@@ -84,7 +87,7 @@ root.protocol('WM_DELETE_WINDOW', closeWindow)#关闭窗口提示
 
 #设置背景
 L_content = StringVar()
-im = get_image('background.png',width,height)
+im = get_image(im,width,height)
 L = Label(root,image=im,textvariable = L_content,justify = 'center',
           compound = 'center',#组合方式,图片相对于文字
                     font = ('宋体',15),
@@ -113,10 +116,12 @@ def hello_world():
     global frame_button,B1,B2,frame_single,B3
     frame_button = Frame(root,bg='white')
     frame_button.pack(side='bottom',fill='x')
+    frame_button.columnconfigure(0,minsize=width//2)
+    frame_button.columnconfigure(1,minsize=width//2)# 强制让两个按钮所在表格宽度相等
     B1 = Button(frame_button,text='同意',width=10,height=2,command=root.quit)
-    B1.grid(row=0,column=1,padx=100)
+    B1.grid(row=0,column=1)
     B2 = Button(frame_button,text='不同意',width=10,height=2,command=lambda : messagebox.showwarning(message=" 你必须读！"))
-    B2.grid(row=0,column=0,padx=100)
+    B2.grid(row=0,column=0)
     frame_single = Frame(root,bg='white')
     frame_single.pack(side='bottom',fill='x')
     frame_single.pack_forget()

@@ -1,9 +1,21 @@
-#增益列表：攻击力、防御力、伤害加成、岩元素伤害加成、
-#   伤害数值加成（基于攻击力）、伤害数值加成（基于防御力）、额外伤害倍率（刀波等）、物理抗性降低、岩元素抗性降低
-buff_list = ["ATK","DEF","Dmg_Inc","Rock_Dmg_Inc",
-             "Dmg_Num_Inc_A","Dmg_Num_Inc_D","Other_Dmg","Phy_RES_Dec","Rock_RES_Dec"]
+'''
+增益列表：百分比攻击力、百分比防御力、固定值攻击力、固定值防御力\n
+    爆伤加成、\n
+    伤害加成、岩元素伤害加成、\n
+    伤害数值加成（基于攻击力）、伤害数值加成（基于防御力）、伤害数值加成（基于生命值）、伤害数值加成（其他属性，直接作为基础倍率）\n
+    额外伤害倍率（刀波等，基于攻击力）、\n
+    物理抗性降低、岩元素抗性降低\n
+'''
+
+buff_list = ["ATK","DEF","ATK_num","DEF_num",
+             "Crit_dmg",
+             "Dmg_Inc","Rock_Dmg_Inc",
+             "Dmg_Num_Inc_A","Dmg_Num_Inc_D","Dmg_Num_Inc_H","Dmg_Num_Inc_O",
+             "Other_Dmg",
+             "Phy_RES_Dec","Rock_RES_Dec"]
 on = 1
 off = 0
+both = 2
 status_list = [on,off]
 accu_rate = 0.001
 class Buff():
@@ -14,9 +26,9 @@ class Buff():
         
     def get(self,status:int,buff_type:str):
         '''
-        status on满层，off0层
-        buff_type 增益类型 取buff_list内容
-        num 增益数值，如80% 输入0.8
+        status on满层，off0层\n
+        buff_type 增益类型 取buff_list内容\n
+        num 增益数值，如80% 输入0.8\n
         '''
         if buff_type not in buff_list:
             print("get_buff error")
@@ -29,19 +41,22 @@ class Buff():
             print("get_buff error")
             return 0
     
-    def set(self,status:int,buff_type:str,num:float):
+    def set(self,status:int,buff_type:str,num:float=0):
         '''
-        status on满层，off0层
-        buff_type 增益类型 取buff_list内容
-        num 增益数值，如80% 输入0.8
+        status on满层，off0层\n
+        buff_type 增益类型 取buff_list内容\n
+        num 增益数值，如80% 输入0.8\n
         '''
         if buff_type not in buff_list:
             print("set_buff error")
             return
         if status == on:
-            self.on[buff_type]=num
+            self.on[buff_type] = num
         elif status == off:
-            self.off[buff_type]=num
+            self.off[buff_type] = num
+        elif status == both:
+            self.on[buff_type] = num
+            self.off[buff_type] = num
         else:
             print("set_buff error")
             return

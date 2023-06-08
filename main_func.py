@@ -37,8 +37,16 @@ class Noelle():
         if(data["Noelle_num"]==6):
             self.DEF2ATK += 0.5
         if ui.choose_buff():
-            self.buff = wp.get_buff(data["Weapon"],data["Weapon_num"])+re.get_buff(data["Relic"])+other_buff.get_buff(ui.get_buff())
+            calc_other_buff = None
+            while not calc_other_buff:
+                self.other_buff_chosen = ui.get_buff()
+                ui.root.withdraw()
+                calc_other_buff = other_buff.get_buff(self.other_buff_chosen)
+                ui.root.wm_deiconify()
+            self.buff = wp.get_buff(data["Weapon"],data["Weapon_num"])+re.get_buff(data["Relic"])+calc_other_buff
+            
         else:
+            self.other_buff_chosen = (0,1)
             self.buff = wp.get_buff(data["Weapon"],data["Weapon_num"])+re.get_buff(data["Relic"])+other_buff.get_buff()
         self.output = ''
 
@@ -92,6 +100,7 @@ if __name__ =='__main__':
     print(n.basic_data)
     n.calc()
     ui.show_msg(n)
-    n.inspect()
+    if max(n.other_buff_chosen)<2:
+        n.inspect()
     ui.output_choose(n)
     ui.goodbye_word()

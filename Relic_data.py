@@ -1,5 +1,5 @@
 import buff
-Relics_list = {'角斗士':1,'逆飞':2, '华馆':3}
+Relics_list = {'角斗士':1,'逆飞':2, '华馆':3, '华馆（防御面板已叠满）':4}
 def get_buff(Relic:int):
     b = buff.Buff()
     if Relic == 1:
@@ -11,6 +11,9 @@ def get_buff(Relic:int):
     elif Relic == 3:
         b.set(buff.on,"Rock_Dmg_Inc",0.24)
         b.set(buff.on,"DEF",0.24)
+    elif Relic == 4:
+        b.set(buff.on,"Rock_Dmg_Inc",0.24)
+        b.set(buff.off,"DEF",-0.24)
     return b
 
 if __name__=='__main__':

@@ -26,24 +26,25 @@ Other_Dmg_tiankong_on = {1:0.8,2: 1, 3: 1.2, 4: 1.4, 5: 1.6}
 
 def get_buff(Weapon,Weapon_num:int):
     b = buff.Buff()
-    if Weapon == 1:
+    if Weapon == weapons_list['赤角']:
         b.set(buff.on,"Dmg_Num_Inc_D",Dmg_Num_Inc_D_chijiao[Weapon_num])
         b.set(buff.off,"Dmg_Num_Inc_D",Dmg_Num_Inc_D_chijiao[Weapon_num])
-    elif Weapon == 2:
+    elif Weapon == weapons_list['螭骨']:
         b.set(buff.on,"Dmg_Inc", Dmg_Inc_chigu_on[Weapon_num])
-    elif Weapon == 3:
+    elif Weapon == weapons_list['天空']:
         b.set(buff.on,"Dmg_Inc", Dmg_Inc_tiankong_on[Weapon_num])
-    elif Weapon == 4:
+        b.set(buff.on,"Other_Dmg", Other_Dmg_tiankong_on[Weapon_num])
+    elif Weapon == weapons_list['白影']:
         b.set(buff.on,"ATK" , ATK_baiying_on[Weapon_num])
         b.set(buff.on,"DEF" , DEF_baiying_on[Weapon_num])
-    elif Weapon == 5:
+    elif Weapon == weapons_list['无工']:
         b.set(buff.on,"ATK" , ATK_wugong_on[Weapon_num])
         b.set(buff.off,"ATK" , ATK_wugong_off[Weapon_num])
-    elif Weapon == 6:
+    elif Weapon == weapons_list['狼末']:
         b.set(buff.on,"ATK" , ATK_langmo_on[Weapon_num])
-    elif Weapon == 7:
+    elif Weapon == weapons_list['黑岩']:
         b.set(buff.on,"ATK" , ATK_heiyan_on[Weapon_num])
-    elif Weapon == 8:
+    elif Weapon == weapons_list['西风']:
         pass
     return b
 
