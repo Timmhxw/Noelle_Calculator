@@ -1,6 +1,6 @@
 '''
 增益列表：百分比攻击力、百分比防御力、固定值攻击力、固定值防御力\n
-    爆伤加成、\n
+    暴击率加成、爆伤加成、\n
     伤害加成、岩元素伤害加成、\n
     伤害数值加成（基于攻击力）、伤害数值加成（基于防御力）、伤害数值加成（基于生命值）、伤害数值加成（其他属性，直接作为基础倍率）\n
     额外伤害倍率（刀波等，基于攻击力）、\n
@@ -8,7 +8,7 @@
 '''
 
 buff_list = ["ATK","DEF","ATK_num","DEF_num",
-             "Crit_dmg",
+             "Crit_rate","Crit_dmg",
              "Dmg_Inc","Rock_Dmg_Inc",
              "Dmg_Num_Inc_A","Dmg_Num_Inc_D","Dmg_Num_Inc_H","Dmg_Num_Inc_O",
              "Other_Dmg",

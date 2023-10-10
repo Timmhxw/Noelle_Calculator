@@ -32,9 +32,9 @@ def calc(data,b:buff.Buff,A_Magn,DEF2ATK):
                 hit_add = b.get(st,"Other_Dmg") * calc_ATK * multi_second * (b.get(st,"Dmg_Inc")+1)*  DEF_RES(0.3,b.get(st,"Phy_RES_Dec"))#物抗30%
                 hit = hit + hit_add
             calc_hit[st][k] = hit
-        expect = multi_first * (data["Crit_rate"]*(data["Crit_dmg"]+ b.get(st,"Crit_dmg") )+1)*multi_third*multi_fourth
+        expect = multi_first * ((data["Crit_rate"]+b.get(st,"Crit_rate"))*(data["Crit_dmg"]+ b.get(st,"Crit_dmg") )+1)*multi_third*multi_fourth
         if b.get(st,"Other_Dmg"):
-            expect_add = b.get(st,"Other_Dmg") * calc_ATK * (data["Crit_rate"]*data["Crit_dmg"]+1) * (b.get(st,"Dmg_Inc")+1)* DEF_RES(0.3,b.get(st,"Phy_RES_Dec"))#物抗30%
+            expect_add = b.get(st,"Other_Dmg") * calc_ATK * ((data["Crit_rate"]+b.get(st,"Crit_rate"))*data["Crit_dmg"]+1) * (b.get(st,"Dmg_Inc")+1)* DEF_RES(0.3,b.get(st,"Phy_RES_Dec"))#物抗30%
             expect = expect + expect_add
         calc_expect[st] = expect
     return calc_hit,total_calc_ATK,calc_expect

@@ -2,9 +2,16 @@ import buff
 from ui_further_query import Query_for_other_person
 other_buff_list = {"双岩":0,"岩伤杯":1,"钟离":2,"夜兰":3,'五郎':4,'云堇':5}
 cache = {}
-class WuLang():
+class Person():
     def __init__(self) -> None:
         pass
+    @property
+    def query(self):
+        pass
+    def calc_buff(self,data)->buff.Buff:
+        pass
+
+class WuLang(Person):
     @property
     def query(self):
         return [
@@ -40,9 +47,8 @@ class WuLang():
             else:
                 b.set(buff.both,"Crit_dmg",0.2)
         return b
-class YunJin():
-    def __init__(self) -> None:
-        pass
+    
+class YunJin(Person):
     @property
     def query(self):
         return [
