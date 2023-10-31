@@ -1,13 +1,14 @@
-import buff
+import buff,abc
 from ui_further_query import Query_for_other_person
 other_buff_list = {"双岩":0,"岩伤杯":1,"钟离":2,"夜兰":3,'五郎':4,'云堇':5}
 cache = {}
-class Person():
+class Person(abc.ABC):
     def __init__(self) -> None:
         pass
-    @property
+    @abc.abstractproperty
     def query(self):
         pass
+    @abc.abstractmethod
     def calc_buff(self,data)->buff.Buff:
         pass
 
