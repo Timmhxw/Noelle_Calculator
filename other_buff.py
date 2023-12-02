@@ -13,6 +13,16 @@ class Person(abc.ABC):
         return other_buff_list[self.name]
     @abc.abstractproperty
     def query(self):
+        '''
+        [
+            {
+                'item': what to ask for,the type should be 'str'\n
+                'type': 'int' 'choose' or 'float', need to be string\n
+                'range': [low,high] or dict[str,int] if the type is choose\n
+            },
+            ...
+        ]
+        '''
         pass
     @abc.abstractmethod
     def calc_buff(self,data)->buff.Buff:
