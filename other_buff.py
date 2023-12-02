@@ -6,6 +6,12 @@ class Person(abc.ABC):
     def __init__(self) -> None:
         pass
     @abc.abstractproperty
+    def name(self):
+        pass
+    @property
+    def id(self):
+        return other_buff_list[self.name]
+    @abc.abstractproperty
     def query(self):
         pass
     @abc.abstractmethod
@@ -13,6 +19,9 @@ class Person(abc.ABC):
         pass
 
 class WuLang(Person):
+    @property
+    def name(self):
+        return '五郎'
     @property
     def query(self):
         return [
@@ -37,7 +46,7 @@ class WuLang(Person):
                    13: 438}
     def calc_buff(self,data)->buff.Buff:
         b = buff.Buff()
-        self.data = data['五郎']
+        self.data = data[self.name]
         b.set(buff.both,"DEF_num",self.E_DEF_Magn[self.data['e天赋等级']])
         if self.data['是否至少三岩']:
             b.set(buff.both,'Rock_Dmg_Inc',0.15)
@@ -50,6 +59,9 @@ class WuLang(Person):
         return b
     
 class YunJin(Person):
+    @property
+    def name(self):
+        return '云堇'
     @property
     def query(self):
         return [
@@ -80,7 +92,7 @@ class YunJin(Person):
     def calc_buff(self,data)->buff.Buff:
         b = buff.Buff()
         basic_DEF = 734
-        self.data = data['云堇']
+        self.data = data[self.name]
         total_DEF = self.data['防御力(入队满华馆)']
         basic_per_DEF = self.Q_basicDmgDEF_Magn[self.data['q天赋等级']] + 0.25*self.data['元素类型数目']
 
@@ -94,6 +106,9 @@ class YunJin(Person):
         return b
     
 class FuNingNa(Person):
+    @property
+    def name(self):
+        return '芙宁娜'
     @property
     def query(self):
         return [
@@ -113,14 +128,17 @@ class FuNingNa(Person):
                    13: 0.31}
     def calc_buff(self, data) -> buff.Buff:
         b = buff.Buff()
-        self.data = data['芙宁娜']
+        self.data = data[self.name]
         if self.data['命座数']>=1:
-            b.set(buff.off,'Dmg_Inc',self.Q_Dmg_Inc_Magn[self.data['q天赋等级']])
+            b.set(buff.off,'Dmg_Inc',self.Q_Dmg_Inc_Magn[self.data['q天赋等级']]*1.5)
             b.set(buff.on,'Dmg_Inc',self.Q_Dmg_Inc_Magn[self.data['q天赋等级']]*4)
         else:
             b.set(buff.on,'Dmg_Inc',self.Q_Dmg_Inc_Magn[self.data['q天赋等级']]*3)
         return b
-
+    
+person_register = {}
+for subclass in Person.__subclasses__():
+    person_register[subclass().id] = subclass
 def get_buff(others = (0,1)):
     b = buff.Buff()
     for key,value in other_buff_list.items():
@@ -142,27 +160,13 @@ def get_buff(others = (0,1)):
         elif other_buff_list['夜兰'] == o_buff:
             b_add.set(buff.on,"Dmg_Inc",0.50)
             b_add.set(buff.off,"Dmg_Inc",0.01)
-        elif other_buff_list['五郎'] == o_buff:
-            wl = WuLang()
+        else:#get subclass of Person
+            person:Person = person_register[o_buff]()
             try:
-                Query_for_other_person('五郎',cache,wl.query)
+                Query_for_other_person(person.name,cache,person.query)
             except:
                 return None
-            b_add = wl.calc_buff(cache)
-        elif other_buff_list['云堇'] == o_buff:
-            yj = YunJin()
-            try:
-                Query_for_other_person('云堇',cache,yj.query)
-            except:
-                return None
-            b_add = yj.calc_buff(cache)
-        elif other_buff_list['芙宁娜'] == o_buff:
-            fnn = FuNingNa()
-            try:
-                Query_for_other_person('芙宁娜',cache,fnn.query)
-            except:
-                return None
-            b_add = fnn.calc_buff(cache)
+            b_add = person.calc_buff(cache)
         b += b_add
     return b
 
