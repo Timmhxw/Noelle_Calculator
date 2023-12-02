@@ -26,9 +26,9 @@ class Buff():
         
     def get(self,status:int,buff_type:str):
         '''
+        获取对应增益
         status on满层，off0层\n
         buff_type 增益类型 取buff_list内容\n
-        num 增益数值，如80% 输入0.8\n
         '''
         if buff_type not in buff_list:
             print("get_buff error")
@@ -43,7 +43,8 @@ class Buff():
     
     def set(self,status:int,buff_type:str,num:float=0):
         '''
-        status on满层，off0层\n
+        设置增益
+        status on满层，off0层，both为常驻增益\n
         buff_type 增益类型 取buff_list内容\n
         num 增益数值，如80% 输入0.8\n
         '''

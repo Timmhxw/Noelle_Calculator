@@ -26,7 +26,7 @@ class Query_for_other_person():
             [
                 {
                     'item': what to ask for,the type should be 'str'\n
-                    'type': 'int' 'choose' or 'float'\n
+                    'type': 'int' 'choose' or 'float', need to be string\n
                     'range': [low,high] or dict[str,int] if the type is choose\n
                 }
             ]

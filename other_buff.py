@@ -1,6 +1,6 @@
 import buff,abc
 from ui_further_query import Query_for_other_person
-other_buff_list = {"双岩":0,"岩伤杯":1,"钟离":2,"夜兰":3,'五郎':4,'云堇':5}
+other_buff_list = {"双岩":0,"岩伤杯":1,"钟离":2,"夜兰":3,'五郎':4,'云堇':5,'芙宁娜':6}
 cache = {}
 class Person(abc.ABC):
     def __init__(self) -> None:
@@ -92,6 +92,34 @@ class YunJin(Person):
             total_DEF += 0.2*basic_DEF
         b.set(buff.both,"Dmg_Num_Inc_O",total_DEF*basic_per_DEF)
         return b
+    
+class FuNingNa(Person):
+    @property
+    def query(self):
+        return [
+            {
+                'item':'命座数',
+                'type':'int',
+                'range':[0,6]
+            },
+            {
+                'item':'q天赋等级',
+                'type':'int',
+                'range':[1,13]
+            }
+        ]
+    Q_Dmg_Inc_Magn = {1:0.07,2: 0.09, 3: 0.11, 4:0.13, 5: 0.15, 6: 0.17,
+                   7:0.19,8: 0.21, 9: 0.23,10:0.25,11: 0.27, 12: 0.29,
+                   13: 0.31}
+    def calc_buff(self, data) -> buff.Buff:
+        b = buff.Buff()
+        self.data = data['芙宁娜']
+        if self.data['命座数']>=1:
+            b.set(buff.off,'Dmg_Inc',self.Q_Dmg_Inc_Magn[self.data['q天赋等级']])
+            b.set(buff.on,'Dmg_Inc',self.Q_Dmg_Inc_Magn[self.data['q天赋等级']]*4)
+        else:
+            b.set(buff.on,'Dmg_Inc',self.Q_Dmg_Inc_Magn[self.data['q天赋等级']]*3)
+        return b
 
 def get_buff(others = (0,1)):
     b = buff.Buff()
@@ -128,6 +156,13 @@ def get_buff(others = (0,1)):
             except:
                 return None
             b_add = yj.calc_buff(cache)
+        elif other_buff_list['芙宁娜'] == o_buff:
+            fnn = FuNingNa()
+            try:
+                Query_for_other_person('芙宁娜',cache,fnn.query)
+            except:
+                return None
+            b_add = fnn.calc_buff(cache)
         b += b_add
     return b
 
