@@ -15,6 +15,13 @@
 >
 > 武器、圣遗物、其他buff可按照格式修改，基础格式参见buff.py
 ---
+> 3.2版本更新主要内容
+>-
+>- 添加了芙宁娜和猎人套，补充了计算公式中暴击率的增益以及最大值限制
+>
+>- 标注了other_buff.py中的DIY part，现在可以通过按照模板新建person类的子类，来规范创建队友buff
+
+---
 > 3.1版本更新主要内容
 >-
 >- 可通过build_env.bat创建conda环境，当然前提是有conda。随后用run.bat在conda环境中运行代码。pyinstall.bat提供了定制化代码后通过pyinstaller自动生成可执行文件包的脚本
