@@ -10,6 +10,9 @@ class Person(abc.ABC):
         pass
     @property
     def id(self):
+        if not other_buff_list.get(self.name):
+            print(f'{self.name} has not recorded in other_buff_list')
+            exit(0)
         return other_buff_list[self.name]
     @abc.abstractproperty
     def query(self):
@@ -27,7 +30,7 @@ class Person(abc.ABC):
     @abc.abstractmethod
     def calc_buff(self,data)->buff.Buff:
         pass
-
+# DIY part begin
 class WuLang(Person):
     @property
     def name(self):
@@ -145,7 +148,7 @@ class FuNingNa(Person):
         else:
             b.set(buff.on,'Dmg_Inc',self.Q_Dmg_Inc_Magn[self.data['q天赋等级']]*3)
         return b
-    
+# DIY part end
 person_register = {}
 for subclass in Person.__subclasses__():
     person_register[subclass().id] = subclass
